@@ -201,6 +201,41 @@ int supprimerJoueur() {
     return 0;
 }
 
+int rechercherParID() {
+    int id;
+    printf("Entrez l'ID du joueur : ");
+    scanf("%d", &id);
+
+    for (int i = 0; i < nbJoueurs; i++) {
+        if (equipe[i].id == id) {
+            afficherJoueur(equipe[i]);
+            return 1;
+        }
+    }
+    printf("Aucun joueur trouvé avec cet ID.\n");
+    return 0;
+}
+
+int rechercherParNom() {
+    char nom[30];
+    printf("Entrez le nom du joueur : ");
+    scanf("%s", nom);
+
+    int trouve = 0;
+    for (int i = 0; i < nbJoueurs; i++) {
+        if (strcmp(equipe[i].nom, nom) == 0) {
+            afficherJoueur(equipe[i]);
+            trouve = 1;
+        }
+    }
+
+    if (!trouve) {
+        printf("Aucun joueur trouvé avec ce nom.\n");
+    }
+    return 0;
+}
+
+
 int menu() {
     printf("\n--- MENU ---\n");
     printf("1. Ajouter un joueur\n");
