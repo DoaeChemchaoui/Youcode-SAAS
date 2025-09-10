@@ -182,6 +182,25 @@ int modifierJoueur() {
     return 0;
 }
 
+int supprimerJoueur() {
+    int id;
+    printf("ID du joueur à supprimer : ");
+    scanf("%d", &id);
+
+    for (int i = 0; i < nbJoueurs; i++) {
+        if (equipe[i].id == id) {
+            for (int j = i; j < nbJoueurs - 1; j++) {
+                equipe[j] = equipe[j + 1];
+            }
+            nbJoueurs--;
+            printf("Joueur supprimé avec succès.\n");
+            return 1;
+        }
+    }
+    printf("Joueur non trouvé.\n");
+    return 0;
+}
+
 int menu() {
     printf("\n--- MENU ---\n");
     printf("1. Ajouter un joueur\n");
