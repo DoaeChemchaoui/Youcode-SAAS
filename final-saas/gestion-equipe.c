@@ -157,6 +157,30 @@ int afficherParPoste() {
     return 0;
 }
 
+int modifierJoueur() {
+    int idRecherche;
+    printf("ID du joueur à modifier : ");
+    scanf("%d", &idRecherche);
+
+    for (int i = 0; i < nbJoueurs; i++) {
+        if (equipe[i].id == idRecherche) {
+            printf("Nouveau poste : ");
+            scanf("%s", equipe[i].poste);
+
+            printf("Nouvel âge : ");
+            scanf("%d", &equipe[i].age);
+
+            printf("Nouveau nombre de buts : ");
+            scanf("%d", &equipe[i].buts);
+
+            printf("Modifications enregistrées.\n");
+            return 1;
+        }
+    }
+
+    printf("Joueur non trouvé.\n");
+    return 0;
+}
 
 int menu() {
     printf("\n--- MENU ---\n");
@@ -190,7 +214,7 @@ int main() {
             case 3: trierParNom(); break;
             case 4: trierParAge(); break;
             case 5: afficherParPoste(); break;
-            // case 6: modifierJoueur(); break;
+            case 6: modifierJoueur(); break;
             // case 7: supprimerJoueur(); break;
             // case 8: rechercherParID(); break;
             // case 9: rechercherParNom(); break;
