@@ -73,6 +73,90 @@ int ajouterJoueurs() {
     return 0;
 }
 
+int afficherJoueur(struct Joueur j) {
+    printf("\nID : %d\n", j.id);
+    printf("Nom : %s\n", j.nom);
+    printf("Prénom : %s\n", j.prenom);
+    printf("Numéro de maillot : %d\n", j.numeroMaillot);
+    printf("Poste : %s\n", j.poste);
+    printf("Âge : %d\n", j.age);
+    printf("Buts : %d\n", j.buts);
+    printf("Statut : %s\n", j.statut);
+    return 0;  // fonction retourne int donc ajouter return
+}
+
+int afficherJoueurs() {
+    if (nbJoueurs == 0) {
+        printf("Aucun joueur dans l'équipe.\n");
+        return 0;
+    }
+
+    for (int i = 0; i < nbJoueurs; i++) {
+        afficherJoueur(equipe[i]);
+    }
+    return 0;
+}
+
+int trierParNom() {
+    struct Joueur temp;
+    for (int i = 0; i < nbJoueurs - 1; i++) {
+        for (int j = i + 1; j < nbJoueurs; j++) {
+            if (strcmp(equipe[i].nom, equipe[j].nom) > 0) {
+                temp = equipe[i];
+                equipe[i] = equipe[j];
+                equipe[j] = temp;
+            }
+        }
+    }
+
+    printf("\n--- Joueurs triés par nom ---\n");
+    for (int i = 0; i < nbJoueurs; i++) {
+        afficherJoueur(equipe[i]);
+    }
+
+    return 0;
+}
+
+int trierParAge() {
+    struct Joueur temp;
+    for (int i = 0; i < nbJoueurs - 1; i++) {
+        for (int j = i + 1; j < nbJoueurs; j++) {
+            if (equipe[i].age > equipe[j].age) {
+                temp = equipe[i];
+                equipe[i] = equipe[j];
+                equipe[j] = temp;
+            }
+        }
+    }
+
+    printf("\n--- Joueurs triés par âge ---\n");
+    for (int i = 0; i < nbJoueurs; i++) {
+        afficherJoueur(equipe[i]);
+    }
+
+    return 0;
+}
+
+int afficherParPoste() {
+    char posteRecherche[20];
+    printf("Entrez le poste à afficher : ");
+    scanf("%s", posteRecherche);
+
+    int trouve = 0;
+    for (int i = 0; i < nbJoueurs; i++) {
+        if (strcmp(equipe[i].poste, posteRecherche) == 0) {
+            afficherJoueur(equipe[i]);
+            trouve = 1;
+        }
+    }
+
+    if (!trouve) {
+        printf("Aucun joueur trouvé pour ce poste.\n");
+    }
+
+    return 0;
+}
+
 
 int menu() {
     printf("\n--- MENU ---\n");
@@ -102,10 +186,10 @@ int main() {
 
         switch (choix) {
             case 1: ajouterJoueurs(); break;
-            // case 2: afficherJoueurs(); break;
-            // case 3: trierParNom(); break;
-            // case 4: trierParAge(); break;
-            // case 5: afficherParPoste(); break;
+            case 2: afficherJoueurs(); break;
+            case 3: trierParNom(); break;
+            case 4: trierParAge(); break;
+            case 5: afficherParPoste(); break;
             // case 6: modifierJoueur(); break;
             // case 7: supprimerJoueur(); break;
             // case 8: rechercherParID(); break;
