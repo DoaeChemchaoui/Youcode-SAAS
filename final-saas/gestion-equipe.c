@@ -13,7 +13,6 @@ struct Joueur {
     char poste[20];
     int age;
     int buts;
-    char dateInscription[11];
     char statut[15];
 };
 
@@ -59,7 +58,6 @@ int ajouterJoueurs() {
         printf("Statut (titulaire/remplaçant) : ");
         scanf("%s", j.statut);
 
-        obtenirDateActuelle(j.dateInscription);
 
         equipe[nbJoueurs++] = j;
 
@@ -73,6 +71,7 @@ int ajouterJoueurs() {
     return 0;
 }
 
+
 int afficherJoueur(struct Joueur j) {
     printf("\nID : %d\n", j.id);
     printf("Nom : %s\n", j.nom);
@@ -82,7 +81,7 @@ int afficherJoueur(struct Joueur j) {
     printf("Âge : %d\n", j.age);
     printf("Buts : %d\n", j.buts);
     printf("Statut : %s\n", j.statut);
-    return 0;  // fonction retourne int donc ajouter return
+    return 0;
 }
 
 int afficherJoueurs() {
@@ -235,6 +234,74 @@ int rechercherParNom() {
     return 0;
 }
 
+int afficherStatistiques() {
+    if (nbJoueurs == 0) {
+        printf("Aucun joueur dans l'équipe.\n");
+        return 0;
+    }
+
+    int totalAge = 0;
+    int maxButs = equipe[0].buts;
+    int minAge = equipe[0].age;
+    int maxAge = equipe[0].age;
+    int indexMaxButs = 0;
+    int indexMinAge = 0;
+    int indexMaxAge = 0;
+
+    for (int i = 0; i < nbJoueurs; i++) {
+        totalAge += equipe[i].age;
+
+        if (equipe[i].buts > maxButs) {
+            maxButs = equipe[i].buts;
+            indexMaxButs = i;
+        }
+
+        if (equipe[i].age < minAge) {
+            minAge = equipe[i].age;
+            indexMinAge = i;
+        }
+
+        if (equipe[i].age > maxAge) {
+            maxAge = equipe[i].age;
+            indexMaxAge = i;
+        }
+    }
+
+    float ageMoyen = (float)totalAge / nbJoueurs;
+
+    printf("\n--- Statistiques ---\n");
+    printf("Nombre de joueurs : %d\n", nbJoueurs);
+    printf("Âge moyen : %.2f ans\n", ageMoyen);
+
+    int x;
+    printf("Afficher les joueurs avec plus de combien de buts ? ");
+    scanf("%d", &x);
+
+    int trouve = 0;
+    for (int i = 0; i < nbJoueurs; i++) {
+        if (equipe[i].buts > x) {
+            afficherJoueur(equipe[i]);
+            trouve = 1;
+        }
+    }
+
+    if (!trouve) {
+        printf("Aucun joueur avec plus de %d buts.\n", x);
+    }
+
+    printf("\nMeilleur buteur :\n");
+    afficherJoueur(equipe[indexMaxButs]);
+
+    printf("\nPlus jeune joueur :\n");
+    afficherJoueur(equipe[indexMinAge]);
+
+    printf("\nPlus âgé joueur :\n");
+    afficherJoueur(equipe[indexMaxAge]);
+
+    return 0;
+}
+
+
 
 int menu() {
     printf("\n--- MENU ---\n");
@@ -269,10 +336,10 @@ int main() {
             case 4: trierParAge(); break;
             case 5: afficherParPoste(); break;
             case 6: modifierJoueur(); break;
-            // case 7: supprimerJoueur(); break;
-            // case 8: rechercherParID(); break;
-            // case 9: rechercherParNom(); break;
-            // case 10: afficherStatistiques(); break;
+            case 7: supprimerJoueur(); break;
+            case 8: rechercherParID(); break;
+            case 9: rechercherParNom(); break;
+            case 10: afficherStatistiques(); break;
             case 11: printf("Au revoir !\n"); break;
             default: printf("Choix invalide.\n"); break;
         }
